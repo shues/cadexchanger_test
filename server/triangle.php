@@ -35,9 +35,9 @@
 		global $vertices;
 
 		for($i = 0; $i<count($matrix); $i++){
-			$vertices[$i][0] = $matrix[$i][0] * $par['width'];
-			$vertices[$i][1] = $matrix[$i][1] * $par['height'];
-			$vertices[$i][2] = $matrix[$i][2] * $par['deep'];
+			$vertices[$i][0] = $matrix[$i][0] * $par['width'] - $par['width']/2;
+			$vertices[$i][1] = $matrix[$i][1] * $par['height'] - $par['height']/2;
+			$vertices[$i][2] = $matrix[$i][2] * $par['deep'] - $par['deep']/2;
 		}
 	}
 
