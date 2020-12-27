@@ -2,14 +2,14 @@ let scene;
 let camera;
 let renderer;
 let material;
-let cube;
+let cube = {};
 let geom;
 
 initDraw();
 
-createFigure();
+//createFigure();
 
-draw();
+//draw();
 
 
 function initDraw() {
@@ -25,7 +25,7 @@ function initScene() {
 }
 
 function initMaterial() {
-  //  material = new THREE.MeshLambertMaterial({
+//    material = new THREE.MeshNormalMaterial({
   material = new THREE.MeshBasicMaterial({
     color: "gray",
     wireframe: true
@@ -74,8 +74,8 @@ function createFigure(source) {
   const animate = function () {
     requestAnimationFrame(animate);
 
-    cube.rotation.x += 0.0001;
-    cube.rotation.y += 0.0001;
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
 
     renderer.render(scene, camera);
   };
@@ -102,13 +102,18 @@ function addTriangles(triangleSet) {
 
 function updateFigure(source) {
   let counter = 0;
+  let triangleSet = source;
   for (let tri in triangleSet) {
     let triangle = triangleSet[tri];
-    geom.vertices[counter].set(new THREE.Vector3(triangle[0][0], triangle[0][1], triangle[0][2]));
-    geom.vertices[counter + 1].set(new THREE.Vector3(triangle[1][0], triangle[1][1], triangle[1][2]));
-    geom.vertices[counter + 2].set(new THREE.Vector3(triangle[2][0], triangle[2][1], triangle[2][2]));
+//    geom.vertices[counter].set(new THREE.Vector3(triangle[0][0], triangle[0][1], triangle[0][2]));
+//    geom.vertices[counter + 1].set(new THREE.Vector3(triangle[1][0], triangle[1][1], triangle[1][2]));
+//    geom.vertices[counter + 2].set(new THREE.Vector3(triangle[2][0], triangle[2][1], triangle[2][2]));
+    geom.vertices[counter].set(triangle[0][0], triangle[0][1], triangle[0][2]);
+    geom.vertices[counter + 1].set(triangle[1][0], triangle[1][1], triangle[1][2]);
+    geom.vertices[counter + 2].set(triangle[2][0], triangle[2][1], triangle[2][2]);
     //    geom.faces.push(new THREE.Face3(counter, counter + 1, counter + 2, normal, color, materialIndex));
     counter += 3
   }
   geom.verticesNeedUpdate = true;
+  draw();
 }
