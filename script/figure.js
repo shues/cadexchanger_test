@@ -3,6 +3,7 @@ let camera;
 let renderer;
 let material;
 let cube;
+let geom;
 
 initDraw();
 
@@ -59,8 +60,8 @@ function draw() {
 
 
 function createFigure(source) {
-  let geom = new THREE.Geometry();
-  addTriangles(geom, source);
+  geom = new THREE.Geometry();
+  addTriangles(source);
   geom.computeFaceNormals();
   geom.computeVertexNormals();
 
@@ -84,7 +85,7 @@ function createFigure(source) {
 }
 
 
-function addTriangles(geom, triangleSet) {
+function addTriangles(triangleSet) {
   const normal = new THREE.Vector3(0, 0, 1);
   const color = new THREE.Color(0xffaa00);
   const materialIndex = 0;
@@ -97,4 +98,17 @@ function addTriangles(geom, triangleSet) {
     geom.faces.push(new THREE.Face3(counter, counter + 1, counter + 2, normal, color, materialIndex));
     counter += 3
   }
+}
+
+function updateFigure(source) {
+  let counter = 0;
+  for (let tri in triangleSet) {
+    let triangle = triangleSet[tri];
+    geom.vertices[counter].set(new THREE.Vector3(triangle[0][0], triangle[0][1], triangle[0][2]));
+    geom.vertices[counter + 1].set(new THREE.Vector3(triangle[1][0], triangle[1][1], triangle[1][2]));
+    geom.vertices[counter + 2].set(new THREE.Vector3(triangle[2][0], triangle[2][1], triangle[2][2]));
+    //    geom.faces.push(new THREE.Face3(counter, counter + 1, counter + 2, normal, color, materialIndex));
+    counter += 3
+  }
+  geom.verticesNeedUpdate = true;
 }

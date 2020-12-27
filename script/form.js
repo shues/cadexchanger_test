@@ -27,7 +27,7 @@ function updateParameters() {
   const el = event.currentTarget;
   parameters[el.id] = +el.value < 0 ? 0 : +el.value;
   setFormValues();
-//  console.log(parameters);
+  //  console.log(parameters);
   makeRequest();
 }
 
@@ -39,7 +39,11 @@ function makeRequest() {
     .then(function (res) {
       console.log(res);
       const source = JSON.parse(res);
-      createFigure(source);
+      if (Object.keys(cube).length === 0) {
+        createFigure(source);
+      }else{
+        updateFigure(source);
+      }
     })
     .catch(function (err) {
       console.log('Error ' + err)
